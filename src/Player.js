@@ -2,7 +2,7 @@ var Player = cc.Sprite.extend({
 	ctor: function(){
 		this.started = false;
 		this._super();
-		this.initWithFile('images/player.png');
+		this.initWithFile('res/images/player.png');
 
 		this.setAnchorPoint(0.5, 0.5)
 
@@ -12,7 +12,7 @@ var Player = cc.Sprite.extend({
 
 	animation: function(){
 		var animation = new cc.Animation.create();
-		animation.addSpriteFrameWithFile('img/player.png');
+		animation.addSpriteFrameWithFile('res/images/player.png');
 		//
 		//
 		animation.setDelayPerUnit(0.3);

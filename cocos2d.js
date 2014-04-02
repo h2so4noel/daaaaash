@@ -13,7 +13,10 @@
         //SingleEngineFile:'',
         appFiles:[
             'src/GameLayer.js',
-            'src/Player.js'     //add your own files in order here
+            'src/Player.js',
+            'src/Brick.js',
+            'src/Goal.js',
+            'src/resource.js'     //add your own files in order here
         ]
     };
 
