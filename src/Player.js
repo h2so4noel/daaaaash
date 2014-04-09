@@ -4,8 +4,6 @@ var Player = cc.Sprite.extend({
 		this._super();
 		this.initWithFile('res/images/player.png');
 
-		this.setAnchorPoint(0.5, 0.5)
-
 		this.speed = 3;
 		this.acceleration = 0.1;
 	},
@@ -27,7 +25,7 @@ var Player = cc.Sprite.extend({
 		}
 	},
 
-	idle: function(){
+	stop: function(){
 		this.started = false;
 	},
 
