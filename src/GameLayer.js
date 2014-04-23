@@ -1,5 +1,7 @@
 var GameLayer = cc.LayerColor.extend({
     init: function() {
+        this.timeout = 20 * 60;
+
         this._super();
         this.background = cc.Sprite.create('res/images/bg.png')
         this.background.setAnchorPoint( new cc.Point(0, 0));
@@ -32,7 +34,7 @@ var GameLayer = cc.LayerColor.extend({
         for(var i = 0; i < this.brickCount; i++){
             this.brick = new Brick(this, this.player);
             this.brick.setPosition(cc.p(this.randomWidth(), this.randomHeight()));
-            this.brick.speed = this.randomVelocity();
+            this.brick.speed = this.randomSpeed();
             this.brick.accl = 0;
             this.addChild(this.brick)
             this.brick.scheduleUpdate();
@@ -42,7 +44,13 @@ var GameLayer = cc.LayerColor.extend({
         }
     },
 
-    randomVelocity: function(){
+    createGoal: function(){
+        this.goal = new Goal(this, this.player);
+        this.addChild(this.goal);
+        this.goal.setPosition(cc.p(screenWidth * 50 / 100, screenHeight * 90 / 100));
+    },
+
+    randomSpeed: function(){
         return Math.round(Math.random() * 7) + 4;
     },
 
@@ -58,20 +66,22 @@ var GameLayer = cc.LayerColor.extend({
         return Math.round(Math.random() * 5) + 1;
     },
 
-    createGoal: function(){
-        this.goal = new Goal();
-        this.addChild(this.goal);
-        this.goal.setPosition(cc.p(screenWidth * 50 / 100, screenHeight * 90 / 100));
-    },
-
     onKeyDown: function(e){
         this.player.start();
+    },
+
+    countDown: function(){
+        this.timeout--;
     },
 
     gameOver: function(){
         this.player.stop();
         this.brick1.stop();
         this.brick2.stop();
+    },
+
+    update: function(){
+        countDown;
     }
 });
 

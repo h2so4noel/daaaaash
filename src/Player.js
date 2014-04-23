@@ -5,7 +5,7 @@ var Player = cc.Sprite.extend({
 		this.initWithFile('res/images/player.png');
 
 		this.speed = 3;
-		this.acceleration = 0.1;
+		this.accl = 0.1;
 	},
 
 	animation: function(){
@@ -21,7 +21,7 @@ var Player = cc.Sprite.extend({
 		if(this.started == true){
 			var pos = this.getPosition();
 			this.setPosition(cc.p(pos.x, pos.y + this.speed));
-			this.speed += this.acceleration;
+			this.speed += this.accl;
 		}
 	},
 

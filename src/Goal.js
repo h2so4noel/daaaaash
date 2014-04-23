@@ -1,5 +1,5 @@
 var Goal = cc.Sprite.extend({
-	ctor: function(){
+	ctor: function(gameLayer, player){
 		this._super();
 		this.initWithFile('res/images/goal.png');
 
