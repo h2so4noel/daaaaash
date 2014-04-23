@@ -1,26 +1,32 @@
 var GameLayer = cc.LayerColor.extend({
     init: function() {
         this.timeout = 15 * 60;
-
         this._super();
-        this.background = cc.Sprite.create('res/images/bg.png')
-        this.background.setAnchorPoint( new cc.Point(0, 0));
-        this.addChild(this.background, 0);
 
         this.setPosition( new cc.Point( 0, 0 ) );
 
-        this.countlbl = cc.LabelTTF.create('0', 'Arial', 30);
-        this.countlbl.setString(this.timeout / 60);
-        this.countlbl.setPosition(cc.p(screenWidth * 95 / 100, screenHeight * 95 / 100));
-        this.addChild(this.countlbl);
-
+        this.createBackground();
         this.createPlayer();
         this.createBricks();
         this.createGoal();
+        this.createLabel();
 
         this.setKeyboardEnabled(true);
         this.scheduleUpdate();
         return true;
+    },
+
+    createBackground: function(){
+        this.background = cc.Sprite.create('res/images/bg.png')
+        this.background.setAnchorPoint( new cc.Point(0, 0));
+        this.addChild(this.background, 0);
+    },
+
+    createLabel: function(){
+        this.countlbl = cc.LabelTTF.create('0', 'Arial', 30);
+        this.countlbl.setString(this.timeout / 60);
+        this.countlbl.setPosition(cc.p(screenWidth * 95 / 100, screenHeight * 95 / 100));
+        this.addChild(this.countlbl);
     },
 
     createPlayer: function(){
@@ -39,16 +45,20 @@ var GameLayer = cc.LayerColor.extend({
         console.log(this.randomHeight());
 
         for(var i = 0; i < this.brickCount; i++){
-            this.brick = new Brick(this, this.player);
-            this.brick.setPosition(cc.p(this.randomWidth(), this.randomHeight()));
-            this.brick.speed = this.randomSpeed();
-            this.brick.accl = 0;
-            this.addChild(this.brick)
-            this.brick.scheduleUpdate();
-            this.brick.start();
-
-            this.bricks[i] = this.brick;
+            this.temp = this.getBrick();
+            this.bricks[i] = this.temp;
         }
+    },
+
+    getBrick: function(){
+        this.brick = new Brick(this, this.player);
+        this.brick.setPosition(cc.p(this.randomWidth(), this.randomHeight()));
+        this.brick.speed = this.randomSpeed();
+        this.brick.accl = 0;
+        this.addChild(this.brick)
+        this.brick.scheduleUpdate();
+        this.brick.start();
+        return this.brick;
     },
 
     createGoal: function(){
@@ -58,7 +68,7 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     randomSpeed: function(){
-        return Math.round(Math.random() * 7) + 4;
+        return Math.round(Math.random() * 5) + 2;
     },
 
     randomWidth: function(){
@@ -70,7 +80,7 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     randomCount: function(){
-        return Math.round(Math.random() * 5) + 1;
+        return Math.round(Math.random() * 3) + 1;
     },
 
     onKeyDown: function(e){
