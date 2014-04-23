@@ -87,6 +87,13 @@ var GameLayer = cc.LayerColor.extend({
         for(var i = 0; i < this.brickCount; i++){
             this.bricks[i].stop();
         }
+
+        var cf = confirm("GAME OVER \n Play Again?");
+
+        setTimeout(function(){
+            if(cf)
+                location.reload();
+        }, 1500)
     },
 
     update: function(){
