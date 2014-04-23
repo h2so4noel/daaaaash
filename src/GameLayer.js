@@ -83,6 +83,7 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     gameOver: function(){
+        this.unscheduleUpdate();
         this.player.stop();
         for(var i = 0; i < this.brickCount; i++){
             this.bricks[i].stop();
@@ -93,14 +94,13 @@ var GameLayer = cc.LayerColor.extend({
         setTimeout(function(){
             if(cf)
                 location.reload();
-        }, 1500)
+        }, 500)
     },
 
     update: function(){
         this.countDown();
         if(this.timeout == 0){
             this.gameOver();
-            this.unscheduleUpdate();
         }
     }
 });
