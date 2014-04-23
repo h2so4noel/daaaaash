@@ -23,7 +23,7 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     createBricks: function(){
-        this.brickCount = 2;
+        this.brickCount = this.randomCount;
         this.bricks = [];
 
         for(var i = 0; i < this.brickCount; i++){
@@ -59,7 +59,7 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     randomVelocity: function(){
-        return Math.floor(Math.random() * 10) + 5;
+        return Math.round(Math.random() * 10) + 5;
     },
 
     randomWidth: function(){
@@ -68,6 +68,10 @@ var GameLayer = cc.LayerColor.extend({
 
     randomHeight: function(){
 
+    },
+
+    randomCount: function(){
+        return Math.round(Math.random() * 5) + 1
     },
 
     createGoal: function(){
