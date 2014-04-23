@@ -23,6 +23,21 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     createBricks: function(){
+        this.brickCount = 2;
+        this.bricks = [];
+
+        for(int i = 0; i < brickCount; i++){
+            this.brick = new Brick(this, this.player);
+            this.brick.setPosition(cc.p(screenWidth * 10 / 100, screenHeight * 40 / 100));
+            this.brick.speed = this.randomVelocity();
+            this.brick.accl = 0;
+            this.brick.addChild(this.brick)
+            this.brick.scheduleUpdate();
+            this.brick.start();
+
+            this.bricks[i] = this.brick;
+        }
+        /*
         this.brick1 = new Brick(this, this.player);
         this.addChild(this.brick1);
         this.brick1.setPosition(cc.p(screenWidth * 10 / 100, screenHeight * 40 / 100));
@@ -40,7 +55,12 @@ var GameLayer = cc.LayerColor.extend({
 
         this.brick1.start();
         this.brick2.start();
+        */
     },
+
+    randomVelocity: function(){
+        return Math.floor(Math.random() * 20) + 1;
+    }
 
     createGoal: function(){
         this.goal = new Goal();
