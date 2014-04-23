@@ -1,6 +1,6 @@
 var GameLayer = cc.LayerColor.extend({
     init: function() {
-        this.timeout = 20 * 60;
+        this.timeout = 15 * 60;
 
         this._super();
         this.background = cc.Sprite.create('res/images/bg.png')
@@ -9,11 +9,17 @@ var GameLayer = cc.LayerColor.extend({
 
         this.setPosition( new cc.Point( 0, 0 ) );
 
+        this.countlbl = cc.LabelTTF.create('0', 'Arial', 30);
+        this.countlbl.setString(this.timeout / 60);
+        this.countlbl.setPosition(cc.p(screenWidth * 95 / 100, screenHeight * 95 / 100));
+        this.addChild(this.countlbl);
+
         this.createPlayer();
         this.createBricks();
         this.createGoal();
 
         this.setKeyboardEnabled(true);
+        this.scheduleUpdate();
         return true;
     },
 
@@ -27,9 +33,10 @@ var GameLayer = cc.LayerColor.extend({
     createBricks: function(){
         this.brickCount = this.randomCount();
         console.log(this.brickCount);
+        this.bricks = [];
+
         console.log(this.randomWidth());
         console.log(this.randomHeight());
-        this.bricks = [];
 
         for(var i = 0; i < this.brickCount; i++){
             this.brick = new Brick(this, this.player);
@@ -72,16 +79,22 @@ var GameLayer = cc.LayerColor.extend({
 
     countDown: function(){
         this.timeout--;
+        this.countlbl.setString(parseInt(this.timeout / 60));
     },
 
     gameOver: function(){
         this.player.stop();
-        this.brick1.stop();
-        this.brick2.stop();
+        for(var i = 0; i < this.brickCount; i++){
+            this.bricks[i].stop();
+        }
     },
 
     update: function(){
-        countDown;
+        this.countDown();
+        if(this.timeout == 0){
+            this.gameOver();
+            this.unscheduleUpdate();
+        }
     }
 });
 
