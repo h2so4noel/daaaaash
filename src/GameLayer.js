@@ -50,6 +50,14 @@ var GameLayer = cc.LayerColor.extend({
         }
     },
 
+    createGoal: function(){
+        this.goal = new Goal(this, this.player);
+        this.addChild(this.goal);
+        this.goal.setPosition(cc.p(screenWidth * 50 / 100, screenHeight * 90 / 100));
+        this.goal.scheduleUpdate();
+    },
+
+
     getBrick: function(){
         this.brick = new Brick(this, this.player);
         this.brick.setPosition(cc.p(this.randomWidth(), this.randomHeight()));
@@ -59,12 +67,6 @@ var GameLayer = cc.LayerColor.extend({
         this.brick.scheduleUpdate();
         this.brick.start();
         return this.brick;
-    },
-
-    createGoal: function(){
-        this.goal = new Goal(this, this.player);
-        this.addChild(this.goal);
-        this.goal.setPosition(cc.p(screenWidth * 50 / 100, screenHeight * 90 / 100));
     },
 
     randomSpeed: function(){
