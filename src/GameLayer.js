@@ -29,6 +29,11 @@ var GameLayer = cc.LayerColor.extend({
         this.addChild(this.countlbl);
     },
 
+    generateScore: function(){
+        this.score = this.brickCount * this.timeout;
+        return this.score;
+    },
+
     createPlayer: function(){
         this.player = new Player();
         this.addChild(this.player);
@@ -80,11 +85,11 @@ var GameLayer = cc.LayerColor.extend({
     randomHeight: function(){
         return Math.round(Math.random() * (screenHeight * 45 / 100)) + (screenHeight * (30 / 100));
     },
-
+    
     randomCount: function(){
-        return Math.round(Math.random() * 3) + 1;
+        return Math.round(Math.random() * 2) + 1;
     },
-
+    
     onKeyDown: function(e){
         this.player.start();
     },
@@ -106,6 +111,22 @@ var GameLayer = cc.LayerColor.extend({
         setTimeout(function(){
             if(cf)
                 location.reload();
+        }, 500)
+    },
+
+    gameFinish: function(){
+        this.unscheduleUpdate();
+        this.player.stop();
+        for(var i = 0; i < this.brickCount; i++){
+            this.bricks[i].stop();
+        }
+
+        var cf = confirm("Stage Cleared! \n Total Score: " + this.generateScore());
+
+        setTimeout(function(){
+            if(cf){
+                location.reload();
+            }
         }, 500)
     },
 

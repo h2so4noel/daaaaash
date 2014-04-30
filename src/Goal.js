@@ -26,7 +26,7 @@ var Goal = cc.Sprite.extend({
 		var pPos = this.player.getPosition();
 		var pos = this.getPosition();
 		if(Math.abs(pPos.x - pos.x) <= 50 && Math.abs(pPos.y - pos.y) <= 50){
-			this.gameLayer.gameOver();
+			this.gameLayer.gameFinish();
 			this.unscheduleUpdate();
 		}
 	}
