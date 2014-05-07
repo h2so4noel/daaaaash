@@ -1,5 +1,12 @@
 var GameLayer = cc.LayerColor.extend({
+    ctor: function(count, score){
+        this._super();
+        this.count = count;
+        this.score = score;
+    },
+
     init: function() {
+        this.state = GameLayer.STATE.START;
         this.timeout = 15 * 60;
         this._super();
 
@@ -92,6 +99,7 @@ var GameLayer = cc.LayerColor.extend({
     
     onKeyDown: function(e){
         this.player.start();
+        this.state = GameLayer.STATE.START;
     },
 
     countDown: function(){
@@ -106,7 +114,7 @@ var GameLayer = cc.LayerColor.extend({
             this.bricks[i].stop();
         }
 
-        var cf = confirm("GAME OVER \n Play Again?");
+        var cf = confirm("GAME OVER \n Total Score: " + this.generateScore() + "\n \n Play Again?");
 
         setTimeout(function(){
             if(cf)
@@ -117,6 +125,7 @@ var GameLayer = cc.LayerColor.extend({
     gameFinish: function(){
         this.unscheduleUpdate();
         this.player.stop();
+        /*
         for(var i = 0; i < this.brickCount; i++){
             this.bricks[i].stop();
         }
@@ -128,6 +137,9 @@ var GameLayer = cc.LayerColor.extend({
                 location.reload();
             }
         }, 500)
+        */
+        var director = cc.Director.getInstance();
+        director.replaceScene(cc.TransitionFade.create( 1, new StartScene()));
     },
 
     update: function(){
@@ -137,6 +149,12 @@ var GameLayer = cc.LayerColor.extend({
         }
     }
 });
+
+GameLayer.STATE = {
+    START: 0,
+    STOP: 1,
+    END: 2
+}
 
 var StartScene = cc.Scene.extend({
     onEnter: function() {
