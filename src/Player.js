@@ -33,11 +33,17 @@ var Player = cc.Sprite.extend({
 	},
 
 	update: function(){
+		if(this.speed <= 0)
+			this.speed = 0;
 		if(this.started == true){
 			var pos = this.getPosition();
 			this.setPosition(cc.p(pos.x, pos.y + this.speed));
 			this.speed += this.accl;
 		}
+	},
+
+	slow: function(){
+		this.speed -= 2;
 	},
 
 	stop: function(){

@@ -100,9 +100,13 @@ var GameLayer = cc.LayerColor.extend({
     
     onKeyDown: function(e){
         if(this.state != GameLayer.STATE.STOP){
-            this.player.start();
+            if(this.player.started == false)
+                this.player.start();
+            else{
+                this.player.slow();
+            } 
             this.state = GameLayer.STATE.START;
-        }
+        } 
     },
 
     countDown: function(){
@@ -129,7 +133,7 @@ var GameLayer = cc.LayerColor.extend({
         }, 500)
         */
         var director = cc.Director.getInstance();
-        director.replaceScene(cc.TransitionFade.create( 1, new StartScene(1, 0)));
+        director.replaceScene(cc.TransitionFade.create( 0.5, new StartScene(1, 0)));
     },
 
     gameFinish: function(){
@@ -153,7 +157,7 @@ var GameLayer = cc.LayerColor.extend({
         this.brickCount++;
         this.score += this.generateScore();
         var director = cc.Director.getInstance();
-        director.replaceScene(cc.TransitionFade.create( 1, new StartScene(this.brickCount, this.score)));
+        director.replaceScene(cc.TransitionFade.create( 0.5, new StartScene(this.brickCount, this.score)));
     },
 
     explodePlayer: function(){
