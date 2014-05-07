@@ -9,15 +9,6 @@ var Goal = cc.Sprite.extend({
 		this.player = player;
 	},
 
-	animation: function(){
-		var animation = new cc.Animation.create();
-		animation.addSpriteFrameWithFile('res/images/goal');
-		//
-		//
-		animation.setDelayPerUnit(0.3);
-		return cc.RepeatForever.create(cc.Animate.create(animation));
-	},
-
 	update: function(){
 		this.checkCollide();
 	},

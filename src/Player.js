@@ -8,13 +8,28 @@ var Player = cc.Sprite.extend({
 		this.accl = 0.1;
 	},
 
-	animation: function(){
+	explodeAni: function(){
 		var animation = new cc.Animation.create();
-		animation.addSpriteFrameWithFile('res/images/player.png');
-		//
-		//
-		animation.setDelayPerUnit(0.3);
-		return cc.RepeatForever.create(cc.Animate.create(animation));
+
+		for(var i = 1; i <= 25; i++){
+			var temp = "bomb_" + i;
+			animation.addSpriteFrameWithFile("res/images/" + temp + ".png");
+		}
+
+		animation.setDelayPerUnit(0.03);
+		return cc.Animate.create(animation);
+	},
+
+	teleportAni: function(){
+		var animation = new cc.Animation.create();
+
+		for(var i = 1; i <= 10; i++){
+			var temp = "teleport_" + i;
+			animation.addSpriteFrameWithFile("res/images/" + temp + ".png");
+		}
+
+		animation.setDelayPerUnit(0.02);
+		return cc.Animate.create(animation);
 	},
 
 	update: function(){

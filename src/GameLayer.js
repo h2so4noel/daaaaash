@@ -45,7 +45,7 @@ var GameLayer = cc.LayerColor.extend({
 
     createPlayer: function(){
         this.player = new Player();
-        this.addChild(this.player);
+        this.addChild(this.player, 20);
         this.player.setPosition(cc.p(screenWidth * 50 / 100, screenHeight * 10 / 100));
         this.player.scheduleUpdate();
     },
@@ -111,24 +111,32 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     gameOver: function(){
+        this.explodePlayer();
+        this.player.stop();
+
         this.unscheduleUpdate();
         this.state = GameLayer.STATE.STOP
         this.player.stop();
         for(var i = 0; i < this.brickCount; i++){
             this.bricks[i].stop();
         }
-
+        /*
         var cf = confirm("GAME OVER \n Total Score: " + this.score + "\n \n Play Again?");
 
         setTimeout(function(){
             if(cf)
                 location.reload();
         }, 500)
+        */
+        var director = cc.Director.getInstance();
+        director.replaceScene(cc.TransitionFade.create( 1, new StartScene(1, 0)));
     },
 
     gameFinish: function(){
+        this.teleportPlayer();
         this.unscheduleUpdate();
         this.player.stop();
+        this.state = GameLayer.STATE.STOP;
         /*
         for(var i = 0; i < this.brickCount; i++){
             this.bricks[i].stop();
@@ -146,6 +154,17 @@ var GameLayer = cc.LayerColor.extend({
         this.score += this.generateScore();
         var director = cc.Director.getInstance();
         director.replaceScene(cc.TransitionFade.create( 1, new StartScene(this.brickCount, this.score)));
+    },
+
+    explodePlayer: function(){
+        this.player.setScale(2.0);
+        this.explode = this.player.explodeAni();
+        this.player.runAction(this.explode);
+    },
+
+    teleportPlayer: function(){
+        this.teleport = this.player.teleportAni();
+        this.player.runAction(this.teleport);
     },
 
     update: function(){
